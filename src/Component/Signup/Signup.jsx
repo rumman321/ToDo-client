@@ -39,8 +39,8 @@ const Signup = () => {
         console.log(userData);
 
         // Send user data to backend
-        const { data } = await axios.post('http://localhost:5000/users', userData);
-        console.log(data);
+        const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/users`, userData);
+      
 
         navigate("/");
     } catch (err) {

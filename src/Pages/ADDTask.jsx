@@ -1,15 +1,36 @@
+import axios from "axios";
 import { compareAsc, format } from "date-fns";
+import { useState } from "react";
+import ButtonLoading from "../Component/ButtonLoading/ButtonLoading";
 
 const ADDTask = () => {
+    const [Category,setCategory]= useState('')
+    const [loading, setLoading] = useState(false)
   const time = format(new Date(), "yyyy-MM-dd");
   
-  const handleAdd = (e)=>{
+  const handleAdd = async(e)=>{
+    setLoading(true)
     e.preventDefault();
 
     const form = new FormData(e.target);
-    const name = form.get("title");
-    const email = form.get("message");
-    console.log(email,name);
+    const title = form.get("title");
+    const message = form.get("message");
+    
+    const taskData={
+        tile:title,
+        message:message,
+        time:time,
+        Category:Category
+    }
+    const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/tasks`, taskData);
+        console.log(data);
+        if(data.insertedId){
+            // form.reset()
+            
+            e.target.reset();
+            
+        }
+        setLoading(false)
   }
   return (
     <div>
@@ -21,11 +42,25 @@ const ADDTask = () => {
             </label>
             <input
               type="text"
+              name="title"
               placeholder="Title"
               className="input input-bordered"
               required
             />
           </div>
+          <select
+              className="select select-bordered"
+              name="category"
+              onChange={(e) => setCategory(e.target.value)}
+              required
+            >
+              <option value="" disabled selected>
+                Select a category
+              </option>
+              <option value="To-Do">To-Do</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Done">Done</option>
+            </select>
           <div className="form-control">
             <label className="label">
               <span className="label-text">Description</span>
@@ -39,7 +74,10 @@ const ADDTask = () => {
             
           </div>
           <div className="form-control mt-6">
-            <button className="btn btn-primary">ADD</button>
+            {
+                loading ? <ButtonLoading></ButtonLoading>:<button className="btn btn-primary">ADD</button>
+            }
+            
           </div>
         </form>
       </div>
