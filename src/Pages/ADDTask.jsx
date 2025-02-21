@@ -19,7 +19,7 @@ const ADDTask = () => {
     const message = form.get("message");
     
     const taskData={
-        tile:title,
+        title:title,
         message:message,
         time:time,
         Category:Category
@@ -51,8 +51,12 @@ const ADDTask = () => {
               required
             />
           </div>
+          <div className="form-control">
+          <label className="label">
+              <span className="label-text">Category</span>
+            </label>
           <select
-              className="select select-bordered"
+              className="select select-bordered "
               name="category"
               onChange={(e) => setCategory(e.target.value)}
               required
@@ -64,6 +68,7 @@ const ADDTask = () => {
               <option value="In Progress">In Progress</option>
               <option value="Done">Done</option>
             </select>
+            </div>
           <div className="form-control">
             <label className="label">
               <span className="label-text">Description</span>
