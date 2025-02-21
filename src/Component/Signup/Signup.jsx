@@ -1,50 +1,53 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
+
 
 const Signup = () => {
   const { userNewCreate, setUser, upDateUserProfile } = useContext(AuthContext);
   const [error, setError] = useState({});
   const navigate = useNavigate();
-  const handleSubmit=(e)=>{
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const form= new FormData(e.target)
-    const name=form.get("name")
-    // if(name.length <5){
-    //     setError({ ...error , name: "name must be more than 5 character"})
-    //     return
-    // }
-    const photo=form.get("photo")
-    const email=form.get("email")
-    const password=form.get("password")
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    const form = new FormData(e.target);
+    const name = form.get("name");
+    const email = form.get("email");
+    const password = form.get("password");
 
-    if(!passwordRegex.test(password)){
-        setError( { ...error, pass: `password Must have an Uppercase letter a Lowercase & Length must be at least 6 character`})
-        return
+    try {
+        // Create user in Firebase
+        const result = await userNewCreate(email, password);
+        console.log(result.user); // Initially, displayName is null
+
+        // ✅ Wait for profile update to complete
+        await upDateUserProfile(name);
+
+        // ✅ Manually update user object in state
+        const updatedUser = { ...result.user, displayName: name };
+        setUser(updatedUser);
+
+        // ✅ Create user data with the correct name
+        const userData = {
+            name: name,  // Directly use `name` instead of `result.user.displayName`
+            email: result?.user?.email,
+            time: new Date(),
+        };
+
+        console.log(userData);
+
+        // Send user data to backend
+        const { data } = await axios.post('http://localhost:5000/users', userData);
+        console.log(data);
+
+        navigate("/");
+    } catch (err) {
+        setError({ ...error, login: err.message });
     }
+};
 
-    // console.log(name,photo,email,password)
-    
-
-    userNewCreate(email,password)
-    .then((result)=>{
-        const user =result.user
-        setUser(user)
-        upDateUserProfile({
-            displayName:name,
-            photoURL:photo
-            })
-            .then(()=>{
-                navigate("/")
-            }).catch(err=> console.log("ERROR ", err))
-        
-    })
-    .catch(Err=>{
-        setError({...error, login:Err.message})
-    })
-}
   return (
     <div>
       <div className="card bg-base-100 w-full max-w-lg p-10 shrink-0 shadow-2xl">
@@ -65,7 +68,7 @@ const Signup = () => {
             />
           </div>
           {/* {error.name && <label className="label text-red-600">{error.name}</label>} */}
-        {/* pore korbo photo er kaj */}
+          {/* pore korbo photo er kaj */}
           {/* <div className="form-control">
             <label className="label">
               <span className="label-text">Photo URL</span>

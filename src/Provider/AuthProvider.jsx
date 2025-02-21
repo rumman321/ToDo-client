@@ -2,6 +2,8 @@ import { createContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { auth } from "../Component/Firebase/Firebase";
 
+
+
 export const AuthContext=createContext()
 const AuthProvider = ({children}) => {
     const [user,setUser]=useState(null)
@@ -26,8 +28,11 @@ const AuthProvider = ({children}) => {
     }
 
      
-     const upDateUserProfile=(updatedData)=>{
-        return updateProfile(auth.currentUser,updatedData)
+     const upDateUserProfile=(name,photo)=>{
+        return updateProfile(auth.currentUser,{
+            displayName:name,
+            photoURL:photo
+        })
     }
 
     const logOut=()=>{
@@ -52,6 +57,8 @@ const AuthProvider = ({children}) => {
         const onSubscribe=onAuthStateChanged(auth,(currentUser)=>{
             if(currentUser){
                 setUser(currentUser)
+                
+                console.log(currentUser);
                 setLoading(false)
             }
             else{
