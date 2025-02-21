@@ -66,7 +66,7 @@ const Navber = () => {
           
         </div>*/}
           {
-          user && user?.email ?
+          user  ?
            (<button onClick={logOut} className="btn btn-neutral">Log Out</button>)
           :
           ( <Link to="/login" className="btn btn-neutral rounded-none">Login</Link >)

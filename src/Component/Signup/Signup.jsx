@@ -44,7 +44,8 @@ const Signup = () => {
 
         navigate("/");
     } catch (err) {
-        setError({ ...error, login: err.message });
+        console.log(err);
+       
     }
 };
 
@@ -52,7 +53,7 @@ const Signup = () => {
     <div>
       <div className="card bg-base-100 w-full max-w-lg p-10 shrink-0 shadow-2xl">
         <h2 className="font-bold text-2xl text-center">
-          Register your account
+          Sign up your account
         </h2>
         <form onSubmit={handleSubmit} className="card-body">
           <div className="form-control">
