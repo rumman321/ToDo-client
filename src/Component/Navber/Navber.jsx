@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const Navber = () => {
-  const {user} = useContext(AuthContext)
+  const {user,logOut} = useContext(AuthContext)
   return (
     <div>
      <div className="navbar bg-base-100">
@@ -69,7 +69,7 @@ const Navber = () => {
           user && user?.email ?
            (<button onClick={logOut} className="btn btn-neutral">Log Out</button>)
           :
-          ( <Link to="/signup" className="btn btn-neutral rounded-none">Signup</Link >)
+          ( <Link to="/login" className="btn btn-neutral rounded-none">Login</Link >)
         } 
           
         </div>
