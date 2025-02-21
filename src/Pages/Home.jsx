@@ -26,7 +26,7 @@ const Home = () => {
       <div>
         <h2 className="text-xl font-bold text-blue-600 mb-4">To-Do</h2>
         {toDoTasks.map((task) => (
-          <TaskCard key={task._id} task={task} />
+          <TaskCard key={task._id} refetch={refetch} task={task} />
         ))}
       </div>
 
@@ -34,7 +34,7 @@ const Home = () => {
       <div>
         <h2 className="text-xl font-bold text-yellow-600 mb-4">In Progress</h2>
         {inProgressTasks.map((task) => (
-          <TaskCard key={task._id} task={task} />
+          <TaskCard key={task._id} refetch={refetch} task={task} />
         ))}
       </div>
 
@@ -42,7 +42,7 @@ const Home = () => {
       <div>
         <h2 className="text-xl font-bold text-green-600 mb-4">Done</h2>
         {doneTasks.map((task) => (
-          <TaskCard key={task._id} task={task} />
+          <TaskCard key={task._id}  refetch={refetch} task={task} />
         ))}
       </div>
     </div>
