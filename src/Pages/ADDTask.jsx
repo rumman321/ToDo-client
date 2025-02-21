@@ -2,10 +2,12 @@ import axios from "axios";
 import { compareAsc, format } from "date-fns";
 import { useState } from "react";
 import ButtonLoading from "../Component/ButtonLoading/ButtonLoading";
+import { useNavigate } from "react-router-dom";
 
 const ADDTask = () => {
     const [Category,setCategory]= useState('')
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
   const time = format(new Date(), "yyyy-MM-dd");
   
   const handleAdd = async(e)=>{
@@ -28,6 +30,7 @@ const ADDTask = () => {
             // form.reset()
             
             e.target.reset();
+            navigate('/')
             
         }
         setLoading(false)
