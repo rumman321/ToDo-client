@@ -3,8 +3,8 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import GoogleLogin from "../GoogleLogin/GoogleLogin";
-
-
+import Lottie from "lottie-react";
+import siginuplottie from "../../assets/lottie/lottielogin.json"
 
 const Signup = () => {
   const { userNewCreate, setUser, upDateUserProfile } = useContext(AuthContext);
@@ -51,12 +51,16 @@ const Signup = () => {
 };
 
   return (
-    <div>
-      <div className="card bg-base-100 w-full max-w-lg p-10 shrink-0 shadow-2xl">
+    <div className="mt-10">
+      <div className="flex flex-col md:flex-row items-center md:justify-center">
+        <div className="w-96">
+          <Lottie animationData={siginuplottie}></Lottie>
+        </div>
+        <div className="card bg-base-100 w-full max-w-lg p-10 shrink-0 shadow-2xl">
         <h2 className="font-bold text-2xl text-center">
           Sign up your account
         </h2>
-        <form onSubmit={handleSubmit} className="card-body">
+        <form onSubmit={handleSubmit} className="card-body shadow-xl">
           <div className="form-control">
             <label className="label">
               <span className="label-text">Your Name</span>
@@ -123,6 +127,7 @@ const Signup = () => {
             Login
           </Link>
         </p>
+      </div>
       </div>
     </div>
   );
