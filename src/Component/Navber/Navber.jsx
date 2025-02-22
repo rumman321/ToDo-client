@@ -68,9 +68,9 @@ const Navber = () => {
         </div>*/}
           {
           user  ?
-           (<button onClick={logOut} className="btn btn-neutral">Log Out</button>)
+           (<button onClick={logOut} className="btn btn-neutral btn-sm">Log Out</button>)
           :
-          ( <Link to="/login" className="btn btn-neutral ">Login</Link >)
+          ( <Link to="/login" className="btn btn-neutral btn-sm">Login</Link >)
         } 
           
         </div>

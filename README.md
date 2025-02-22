@@ -18,7 +18,10 @@ Here’s your README file in Markdown format with a well-structured overview:
 **TASK** is a task management application that allows users to efficiently manage their tasks. Users can create new tasks, track progress, and mark completed tasks. The drag-and-drop feature enhances usability by allowing easy task organization. This app helps users stay productive by providing a clear view of their to-do list, ongoing tasks, and completed work.  
 
 ## Screenshot  
-*(![Add a relevant screenshot here](https://i.ibb.co.com/vxNwqSGm/task.png))*  
+- Home Page
+*(![Home Page](https://i.ibb.co.com/vxNwqSGm/task.png))*  
+- Login Page
+*(![Login Page](https://i.ibb.co.com/3tvX7JQ/ssss.png))*  
 
 ## Technologies Used  
 ### Frontend:  
@@ -92,8 +95,7 @@ VITE_appId=<Your Firebase App ID>
 
 # API URL
 VITE_API_URL=<Your API URL>
-
-
+```
 
 ## Installation and Running Locally  
 To set up the project locally, follow these steps:  
@@ -103,6 +105,7 @@ To set up the project locally, follow these steps:
    git clone <repository-url>
    cd TASK
    ```
+
 
 2. **Install dependencies**  
    ```bash
@@ -122,7 +125,7 @@ To set up the project locally, follow these steps:
 
 ## Live Project  
 Check out the live version of the project:  
-🔗 [TASK Live Project](https://forumweb-15576.web.app/)  
+🔗 [TASK Live Project](https://scic-jobtask-f9ad5.web.app/)  
 
 ## Relevant Resources  
 - [React Documentation](https://react.dev/)  
