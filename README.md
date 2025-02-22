@@ -89,12 +89,11 @@ VITE_projectId=<Your Firebase Project ID>
 VITE_storageBucket=<Your Firebase Storage Bucket>
 VITE_messagingSenderId=<Your Firebase Messaging Sender ID>
 VITE_appId=<Your Firebase App ID>
-VITE_Payment_Gateway_PK=<Your Stripe Public Key>
-
 
 # API URL
-VITE_API_URL=https://todo-2oo1hfl2e-rumman3333s-projects.vercel.app
-```
+VITE_API_URL=<Your API URL>
+
+
 
 ## Installation and Running Locally  
 To set up the project locally, follow these steps:  
