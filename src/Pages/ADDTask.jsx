@@ -1,40 +1,45 @@
 import axios from "axios";
 import { compareAsc, format } from "date-fns";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ButtonLoading from "../Component/ButtonLoading/ButtonLoading";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const ADDTask = () => {
-    const [Category,setCategory]= useState('')
-    const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
+  const { user } = useContext(AuthContext);
+  const [Category, setCategory] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const time = format(new Date(), "yyyy-MM-dd");
-  
-  const handleAdd = async(e)=>{
-    setLoading(true)
+
+  const handleAdd = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     const form = new FormData(e.target);
     const title = form.get("title");
     const message = form.get("message");
-    
-    const taskData={
-        title:title,
-        message:message,
-        time:time,
-        Category:Category
+    const email = user?.email;
+    const taskData = {
+      title: title,
+      message: message,
+      time: time,
+      email:email,
+      Category: Category,
+    };
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_API_URL}/tasks`,
+      taskData
+    );
+    console.log(data);
+    if (data.insertedId) {
+      // form.reset()
+
+      e.target.reset();
+      navigate("/");
     }
-    const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/tasks`, taskData);
-        console.log(data);
-        if(data.insertedId){
-            // form.reset()
-            
-            e.target.reset();
-            navigate('/')
-            
-        }
-        setLoading(false)
-  }
+    setLoading(false);
+  };
   return (
     <div>
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl mx-auto">
@@ -52,10 +57,10 @@ const ADDTask = () => {
             />
           </div>
           <div className="form-control">
-          <label className="label">
+            <label className="label">
               <span className="label-text">Category</span>
             </label>
-          <select
+            <select
               className="select select-bordered "
               name="category"
               onChange={(e) => setCategory(e.target.value)}
@@ -68,7 +73,7 @@ const ADDTask = () => {
               <option value="In Progress">In Progress</option>
               <option value="Done">Done</option>
             </select>
-            </div>
+          </div>
           <div className="form-control">
             <label className="label">
               <span className="label-text">Description</span>
@@ -79,13 +84,13 @@ const ADDTask = () => {
               required
               className="textarea textarea-bordered w-full mb-4"
             ></textarea>
-            
           </div>
           <div className="form-control mt-6">
-            {
-                loading ? <ButtonLoading></ButtonLoading>:<button className="btn btn-primary">ADD</button>
-            }
-            
+            {loading ? (
+              <ButtonLoading></ButtonLoading>
+            ) : (
+              <button className="btn btn-primary">ADD</button>
+            )}
           </div>
         </form>
       </div>

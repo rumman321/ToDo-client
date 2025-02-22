@@ -3,6 +3,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 
 const TaskCard = ({ task, refetch }) => {
+    console.log("alltask card",task);
   const { _id } = task;
   const [category,setCategory] = useState(task.Category)
   const handleUpdate=async(e)=>{

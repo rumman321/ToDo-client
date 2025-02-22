@@ -1,17 +1,22 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import TaskCard from "../Component/TaskCard/TaskCard";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { useState, useEffect } from "react";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
+import Loading from "../Component/Loading/Loading";
 
 const Home = () => {
-  const { data: tasks = [], refetch } = useQuery({
-    queryKey: ["Task"],
+  const {user,loading} = useContext(AuthContext)
+  console.log(user);
+  const { data: tasks = [], refetch, isLoading } = useQuery({
+    queryKey: ["tasks", user?.email],
     queryFn: async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/tasks`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/tasks`,{headers:{email:user?.email}} ); //, {headers:{email:user?.email}} 
       return res.data;
     },
   });
+
   console.log("API URL:", import.meta.env.VITE_API_URL);
 
   // Initialize columns
@@ -20,10 +25,14 @@ const Home = () => {
   useEffect(() => {
     // Group tasks by category
     const groupedTasks = {
-      "To-Do": tasks.filter((task) => task.Category === "To-Do"),
-      "In Progress": tasks.filter((task) => task.Category === "In Progress"),
-      "Done": tasks.filter((task) => task.Category === "Done"),
+      "To-Do": tasks.filter((task) => task.Category === "To-Do") || [],
+      "In Progress": tasks.filter((task) => task.Category === "In Progress") || [],
+      "Done": tasks.filter((task) => task.Category === "Done") || [],
     };
+
+    console.log("Fetched Tasks from API:", tasks);
+    console.log("Processed Columns:", groupedTasks);
+
     setColumns(groupedTasks);
   }, [tasks]);
 
@@ -59,8 +68,8 @@ const Home = () => {
     // Update the task category in the database
     try {
       await axios.patch(`${import.meta.env.VITE_API_URL}/tasks/${task._id}`, {
-        title: task.title, 
-        message: task.message, 
+        title: task.title,
+        message: task.message,
         category: destCategory, // Ensure full data is sent
       });
       refetch(); // Refresh data
@@ -68,7 +77,7 @@ const Home = () => {
       console.error("Error updating task category:", error);
     }
   };
-
+  if(isLoading) return <Loading></Loading>
   return (
     <div className="container mx-auto px-4 py-6">
       <DragDropContext onDragEnd={onDragEnd}>
@@ -76,16 +85,20 @@ const Home = () => {
           {Object.keys(columns).map((category) => (
             <Droppable key={category} droppableId={category}>
               {(provided) => (
-                <div ref={provided.innerRef} {...provided.droppableProps}>
-                  <h2 className={`text-xl font-bold mb-4 ${
-                    category === "To-Do" ? "text-blue-600" :
-                    category === "In Progress" ? "text-yellow-600" : 
-                    "text-green-600"
-                  }`}>
+                <div ref={provided.innerRef} {...provided.droppableProps} className="p-4 bg-gray-100 rounded-lg">
+                  <h2
+                    className={`text-xl font-bold mb-4 ${
+                      category === "To-Do"
+                        ? "text-blue-600"
+                        : category === "In Progress"
+                        ? "text-yellow-600"
+                        : "text-green-600"
+                    }`}
+                  >
                     {category}
                   </h2>
                   {columns[category]?.map((task, index) => (
-                    <Draggable key={task._id} draggableId={task._id} index={index}>
+                    <Draggable key={task._id} draggableId={task._id.toString()} index={index}>
                       {(provided) => (
                         <div
                           ref={provided.innerRef}
