@@ -18,7 +18,7 @@ Here’s your README file in Markdown format with a well-structured overview:
 **TASK** is a task management application that allows users to efficiently manage their tasks. Users can create new tasks, track progress, and mark completed tasks. The drag-and-drop feature enhances usability by allowing easy task organization. This app helps users stay productive by providing a clear view of their to-do list, ongoing tasks, and completed work.  
 
 ## Screenshot  
-*(Add a relevant screenshot here)*  
+*(![Add a relevant screenshot here](https://i.ibb.co.com/vxNwqSGm/task.png))*  
 
 ## Technologies Used  
 ### Frontend:  
@@ -79,7 +79,7 @@ Here’s your README file in Markdown format with a well-structured overview:
     "tailwindcss": "^3.4.17",
     "vite": "^6.1.0"
 }
-
+ ```
 
 ## Environment Configuration  
 ```env.local
@@ -133,5 +133,3 @@ Check out the live version of the project:
 
 ---
 
- 🚀  
-```
