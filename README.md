@@ -1,6 +1,6 @@
 Here’s your README file in Markdown format with a well-structured overview:  
 
-```markdown
+
 # TASK
 
 ## Table of Contents  
