@@ -79,7 +79,7 @@ Here’s your README file in Markdown format with a well-structured overview:
     "tailwindcss": "^3.4.17",
     "vite": "^6.1.0"
 }
-```
+
 
 ## Environment Configuration  
 ```env.local
