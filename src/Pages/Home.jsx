@@ -12,6 +12,7 @@ const Home = () => {
       return res.data;
     },
   });
+  console.log("API URL:", import.meta.env.VITE_API_URL);
 
   // Initialize columns
   const [columns, setColumns] = useState({});
