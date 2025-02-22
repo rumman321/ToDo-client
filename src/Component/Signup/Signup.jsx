@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import GoogleLogin from "../GoogleLogin/GoogleLogin";
 
 
 
@@ -114,8 +115,8 @@ const Signup = () => {
             <button className="btn btn-primary">Sign up</button>
           </div>
         </form>
-        <br />
-        {/* <GoogleLogin></GoogleLogin> */}
+        
+        <GoogleLogin></GoogleLogin>
         <p className="text-center font-semibold">
           Already have an account ?{" "}
           <Link className="text-red-600" to="/login">

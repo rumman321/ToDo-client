@@ -10,11 +10,9 @@ const AuthProvider = ({children}) => {
     const [loading,setLoading]=useState(true)
     // google
     const provider = new GoogleAuthProvider();
-    const handleGoogleSignIn=()=>{
-        signInWithPopup(auth,provider)
-        .then(result=>{
-
-        }).catch(err=> alert("ERROR ", err.message))
+    const googleSignIn=()=>{
+        setLoading(true)
+        return signInWithPopup(auth, provider)
     }
     const userNewCreate=(email,password)=>{
         setLoading(true)
@@ -38,7 +36,6 @@ const AuthProvider = ({children}) => {
 
     const logOut=()=>{
         setLoading(true)
-        setUser(null)
         return signOut(auth)  
         
     }
@@ -50,26 +47,20 @@ const AuthProvider = ({children}) => {
         userSignIn,
         loading,
         upDateUserProfile,
-        handleGoogleSignIn
+        googleSignIn
         
     }
 
-    useEffect(()=>{
-        const onSubscribe=onAuthStateChanged(auth,(currentUser)=>{
-            if(currentUser){
-                setUser(currentUser)
-                
-                // console.log(currentUser);
-                setLoading(false)
-            }
-            else{
-                setLoading(false)
-            }
-            return ()=>onSubscribe()
-        })
-
-        
-    },[user])
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+            console.log(currentUser);
+            setLoading(false);
+        });
+    
+        return () => unsubscribe(); // Cleanup on unmount
+    }, []);
+    
     return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider> ;
 };
 
